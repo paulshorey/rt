@@ -31,84 +31,83 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
 ```
 
-1. Create Features counterSlice in features folder
+1. Create Features userSlice in features folder
 
    ```tsx
-   // /src/features/counter/counterSlice.ts
+   // /src/features/user/userSlice.ts
 
-   import { createSlice } from "@reduxjs/toolkit"
-   import type { PayloadAction } from "@reduxjs/toolkit"
-   import type { RootState } from "@/lib/store"
+   import { createSlice } from "@reduxjs/toolkit";
+   import type { PayloadAction } from "@reduxjs/toolkit";
+   import type { RootState } from "@/lib/store";
 
    // Define a type for the slice state
-   interface CounterState {
-     value: number
+   interface userState {
+     value: number;
    }
 
    // Define the initial state using that type
-   const initialState: CounterState = {
+   const initialState: userState = {
      value: 0,
-   }
+   };
 
-   export const counterSlice = createSlice({
-     name: "counter",
+   export const userSlice = createSlice({
+     name: "user",
      // `createSlice` will infer the state type from the `initialState` argument
      initialState,
      reducers: {
        increment: (state) => {
-         state.value += 1
+         state.counter += 1;
        },
        decrement: (state) => {
-         state.value -= 1
+         state.counter -= 1;
        },
        // Use the PayloadAction type to declare the contents of `action.payload`
        incrementByAmount: (state, action: PayloadAction<number>) => {
-         state.value += action.payload
+         state.counter += action.payload;
        },
      },
-   })
+   });
 
-   export const { increment, decrement, incrementByAmount } =
-     counterSlice.actions
+   export const { increment, decrement, incrementByAmount } = userSlice.actions;
 
    // Other code such as selectors can use the imported `RootState` type
-   export const selectCount = (state: RootState) => state.counter.value
+   export const selectCount = (state: RootState) => state.user.counter;
 
-   export default counterSlice.reducer
+   export default userSlice.reducer;
    ```
 
 1. Create Folder store.ts and hooks.ts in lib folder
 
 ```tsx
 // /src/lib/store.ts
-import { configureStore } from "@reduxjs/toolkit"
-import counterReducer from "@/features/counter/counterSlice"
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "@/features/user/userSlice";
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    user: userReducer,
   },
-})
+});
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;
 ```
 
 ```tsx
 // lib/hooks.ts
-import { useDispatch, useSelector } from "react-redux"
-import type { TypedUseSelectorHook } from "react-redux"
-import type { RootState, AppDispatch } from "./store"
+import { useDispatch, useSelector } from "react-redux";
+import type { TypedUseSelectorHook } from "react-redux";
+import type { RootState, AppDispatch } from "./store";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
-export const useAppDispatch: () => AppDispatch = useDispatch
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 ```
 
 1. Create Provider
@@ -118,21 +117,21 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
    ```tsx
    // components/redux-provider.tsx
 
-   "use client"
+   "use client";
 
-   import { store } from "@/lib/store"
-   import React, { ReactNode } from "react"
-   import { Provider } from "react-redux"
+   import { store } from "@/lib/store";
+   import React, { ReactNode } from "react";
+   import { Provider } from "react-redux";
 
    type ReduxProviderType = {
-     children: ReactNode
-   }
+     children: ReactNode;
+   };
 
    function ReduxProvider({ children }: ReduxProviderType) {
-     return <Provider store={store}>{children}</Provider>
+     return <Provider store={store}>{children}</Provider>;
    }
 
-   export default ReduxProvider
+   export default ReduxProvider;
    ```
 
 2. Folder Structure
@@ -147,8 +146,8 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 |      +-- layout.tsx
 |   +-- components
 |   +-- features
-|      +-- counter
-|         +--counterSlice.tsx
+|      +-- user
+|         +--userSlice.tsx
 |   +-- libs
 |      +-- hooks.tsx
 |      +-- store.tsx
@@ -165,7 +164,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from './page.module.css'
-import Counter from "@/features/counter/Counter"
+import user from "@/features/user/user"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -175,48 +174,41 @@ export default function Home() {
      <nav>
 
 			{/* we use serverside page and only import small client side component*/}
-			<Counter />
+			<user />
     </main>
   )
 }
 ```
 
 ```tsx
-// src/features/counter/counter.tsx
+// src/features/user/user.tsx
 
-"use client"
-import React from "react"
-import type { RootState } from "@/lib/store"
-import { useSelector, useDispatch } from "react-redux"
-import { decrement, increment } from "./counterSlice"
+"use client";
+import React from "react";
+import type { RootState } from "@/lib/store";
+import { useSelector, useDispatch } from "react-redux";
+import { decrement, increment } from "./userSlice";
 
-function Counter() {
-  const count = useSelector((state: RootState) => state.counter.value)
-  const dispatch = useDispatch()
+function user() {
+  const count = useSelector((state: RootState) => state.user.counter);
+  const dispatch = useDispatch();
 
   return (
     <div className="w-full ">
       <div className="flex justify-center gap-5">
-        <button
-          className="border-1px"
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
+        <button className="border-1px" aria-label="Increment value" onClick={() => dispatch(increment())}>
           Increment
         </button>
         <span>{count}</span>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
+        <button aria-label="Decrement value" onClick={() => dispatch(decrement())}>
           Decrement
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default Counter
+export default user;
 ```
 
 Example and demo:

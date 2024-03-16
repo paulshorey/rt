@@ -2,11 +2,11 @@
 import React from "react";
 import type { RootState } from "@/lib/store";
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "./counterSlice";
-import classes from "./Counter.module.css";
+import { decrement, increment } from "./userSlice";
+import classes from "./User.module.css";
 
-function Counter() {
-  const count = useSelector((state: RootState) => state.counter.value);
+function User() {
+  const count = useSelector((state: RootState) => state.user.counter);
   const dispatch = useDispatch();
 
   return (
@@ -26,4 +26,4 @@ function Counter() {
   );
 }
 
-export default Counter;
+export default User;
