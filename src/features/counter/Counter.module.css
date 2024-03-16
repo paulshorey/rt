@@ -1,0 +1,15 @@
+.wrapper {
+  position: relative;
+}
+.wrapper::before {
+  content: '"use client" component';
+  position: absolute;
+  top: -1rem;
+  left: 0.125rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: left;
+  background: white;
+  font-size: 0.75rem;
+  color: red;
+}
