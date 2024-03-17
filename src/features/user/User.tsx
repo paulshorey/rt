@@ -2,10 +2,10 @@
 
 import React from "react";
 import classes from "./User.module.css";
-import { useUser, useSetUserCounter } from "@/state/user";
+import { useSyncUser, useSetUserCounter } from "@/state/user";
 
 function User() {
-  const user = useUser();
+  const user = useSyncUser();
   const setUserCounter = useSetUserCounter();
 
   return (
@@ -22,19 +22,30 @@ function User() {
           </button>
         </div>
         <div className={"mt-7"}>
-          <div>Your IP (API response): </div>
+          <div>Your IP: </div>
           <div className="pt-1">
             <b>{user.ip}</b>
           </div>
         </div>
         <div className={"mt-7"}>
-          <div>
-            Weather in your area <br />
-            (request sent after the IP response was received):{" "}
-          </div>
+          <div>Your location:</div>
           <div className="pt-1">
-            <b>{user.ip}</b>
+            <b>
+              {user.location.city} {user.location.regionCode}, {user.location.countryName}
+            </b>
           </div>
+        </div>
+        <div className={"mt-7"}>
+          <div>Today:</div>
+          <WeatherReport which={"☀️"} change={user.weatherChange.prcpToday} />
+          <WeatherReport which={"🌡️"} change={user.weatherChange.tempToday} />
+          <WeatherReport which={"💨"} change={user.weatherChange.wspdToday} />
+        </div>
+        <div className={"mt-1"}>
+          <div>Tomorrow:</div>
+          <WeatherReport which={"☀️"} change={user.weatherChange.prcpTomorrow} />
+          <WeatherReport which={"🌡️"} change={user.weatherChange.tempTomorrow} />
+          <WeatherReport which={"💨"} change={user.weatherChange.wspdTomorrow} />
         </div>
       </div>
     </div>
@@ -42,3 +53,12 @@ function User() {
 }
 
 export default User;
+
+function WeatherReport({ change, which }) {
+  if (change === "Same") return null;
+  return (
+    <div className="pt-0">
+      {which} <b>{change}</b>
+    </div>
+  );
+}
