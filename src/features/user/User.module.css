@@ -2,7 +2,7 @@
   position: relative;
 }
 .wrapper::before {
-  content: '"use client" component';
+  content: 'Must be "use client" component';
   position: absolute;
   top: -1rem;
   left: 0.125rem;

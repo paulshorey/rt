@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { store } from "@/lib/store"
-import React, { ReactNode } from "react"
-import { Provider } from "react-redux"
+import { store } from "@/state/store";
+import React, { ReactNode } from "react";
+import { Provider } from "react-redux";
 
 type ReduxProviderType = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 function ReduxProvider({ children }: ReduxProviderType) {
-  return <Provider store={store}>{children}</Provider>
+  return <Provider store={store}>{children}</Provider>;
 }
 
-export default ReduxProvider
+export default ReduxProvider;
