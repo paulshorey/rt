@@ -36,10 +36,18 @@ const syncWithLocalStorage = {
   counter: true,
 };
 
-// To avoid NextJS Hydration errors - we must fetch data or access local storage inside useEffect.
-// Alternatively, a function can be passed to createSlice instead of the typical initialState object,
-// but that does not work with SSR (even in "use client" components).
-// ```initialState: () => syncData(initialState);```
+/**
+ * Basic usage, display or use values from state
+ */
+export const useStateUser = () => useSelector((state: { user: UserState }) => state.user);
+
+/**
+ * Initialize state from local storage and server, also return the state
+ * To avoid NextJS Hydration errors - we must fetch data or access local storage inside useEffect.
+ * Alternatively, a function can be passed to createSlice instead of the typical initialState object,
+ * but that does not work with SSR (even in "use client" components).
+ * ```initialState: () => syncData(initialState);```
+ */
 export const useSyncUser = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -112,9 +120,9 @@ const fetchUserData = async () => {
   return user;
 };
 
-/* Choose one of 2 ways to update the state: */
 /**
- * 1) edit user state - set any subset of properties
+ * Edit the state
+ * Technique #1: edit user state - automatically update all specified properties
  * ```
  *   const setUser = useSetUser();
  *   onClick={() => setUser({counter: user.counter + 1})}
@@ -125,7 +133,8 @@ export const useSetUser = () => {
   return (user: UserState) => dispatch({ type: "user/set", payload: user });
 };
 /**
- * 2) or set individual properties
+ * Edit the state
+ * Technique #2: manually set individual properties
  * ```
  *   const setUserCounter = useSetUserCounter();
  *   onClick={() => setUserCounter(user.counter + 1)}

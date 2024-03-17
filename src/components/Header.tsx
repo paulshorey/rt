@@ -1,8 +1,12 @@
+"use client";
+
 import React from "react";
+import { useStateUser } from "@/state/user";
 
 type Props = {};
 
 function Header({}: Props) {
+  const user = useStateUser();
   return (
     <nav className="flex justify-between items-center px-5 py-3 border-b-black border-b-[1px]">
       <a
@@ -12,6 +16,19 @@ function Header({}: Props) {
       >
         G
       </a>
+      <span>
+        <span>#{user.counter}</span>
+        <span className="pl-2">
+          {user.location.regionCode}, {user.location.countryCode}
+        </span>
+        <span className="pl-2">
+          {user.weatherChange.prcpToday === "Sunnier" && "☀️"}
+          {user.weatherChange.prcpToday === "Rainier" && "☁️"}
+          {user.weatherChange.tempToday === "Warmer" && "🥰"}
+          {user.weatherChange.tempToday === "Cooler" && "🥶"}
+          {user.weatherChange.wspdToday === "Windier" && "💨"}
+        </span>
+      </span>
     </nav>
   );
 }

@@ -36,12 +36,12 @@ function User() {
           </div>
         </div>
         <div className={"mt-7"}>
-          <div>Today:</div>
+          <div>Weather today:</div>
           <WeatherReport which={"☀️"} change={user.weatherChange.prcpToday} />
           <WeatherReport which={"🌡️"} change={user.weatherChange.tempToday} />
           <WeatherReport which={"💨"} change={user.weatherChange.wspdToday} />
         </div>
-        <div className={"mt-1"}>
+        <div className={"mt-7"}>
           <div>Tomorrow:</div>
           <WeatherReport which={"☀️"} change={user.weatherChange.prcpTomorrow} />
           <WeatherReport which={"🌡️"} change={user.weatherChange.tempTomorrow} />
