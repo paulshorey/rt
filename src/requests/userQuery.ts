@@ -9,7 +9,7 @@ export const userQuery = async () => {
   user.ip = ipData.ip;
   //
   // location
-  const locationData = await fetcher(`https://ip-api.com/json/${user.ip}`, {});
+  const locationData = await fetcher(`/api/ip/${user.ip}`, {});
   if (!user.location) user.location = {};
   user.location.countryName = locationData.country;
   user.location.countryCode = locationData.countryCode;
