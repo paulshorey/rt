@@ -1,21 +1,15 @@
 import { UserState } from "@/state/user";
 import fetcher from "@/utils/fetcher";
 
-export const fetchUserData = async () => {
+export const userQuery = async () => {
   const user: Partial<UserState> = {};
-  const jsDateTomorrow = new Date();
-  jsDateTomorrow.setDate(new Date().getDate() + 1);
-  const jsDateYesterday = new Date();
-  jsDateYesterday.setDate(new Date().getDate() - 1);
-  const strTomorrow = jsDateTomorrow.toISOString().split("T")[0];
-  const strYesterday = jsDateYesterday.toISOString().split("T")[0];
   //
   // ip
-  const ipData = await fetcher(`https://api.ipify.org?format=json&dateCache=${strTomorrow}`, {});
+  const ipData = await fetcher(`https://api.ipify.org?format=json`, {});
   user.ip = ipData.ip;
   //
   // location
-  const locationData = await fetcher(`http://ip-api.com/json/${user.ip}?dateCache=${strTomorrow}`, {});
+  const locationData = await fetcher(`http://ip-api.com/json/${user.ip}`, {});
   if (!user.location) user.location = {};
   user.location.countryName = locationData.country;
   user.location.countryCode = locationData.countryCode;
@@ -27,6 +21,12 @@ export const fetchUserData = async () => {
   user.location.timezone = locationData.timezone;
   //
   // weather
+  const jsDateTomorrow = new Date();
+  jsDateTomorrow.setDate(new Date().getDate() + 1);
+  const jsDateYesterday = new Date();
+  jsDateYesterday.setDate(new Date().getDate() - 1);
+  const strTomorrow = jsDateTomorrow.toISOString().split("T")[0];
+  const strYesterday = jsDateYesterday.toISOString().split("T")[0];
   const url = `https://meteostat.p.rapidapi.com/point/daily?lat=${user.location.lat}&lon=${user.location.lon}&start=${strYesterday}&end=${strTomorrow}`;
   const weatherData = await fetcher(url, {
     headers: {
@@ -47,4 +47,4 @@ export const fetchUserData = async () => {
   // done
   return user;
 };
-export default fetchUserData;
+export default userQuery;

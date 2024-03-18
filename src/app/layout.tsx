@@ -1,7 +1,6 @@
 import ReduxProvider from "@/providers/ReduxProvider";
 import "./globals.css";
 import { ReactNode } from "react";
-import QueryProvider from "@/providers/QueryProvider";
 interface LayoutProps {
   children: ReactNode;
 }
@@ -15,9 +14,7 @@ export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body className=" bg-[#FDFDFD] w-[100vw] h-[100vh]">
-        <QueryProvider>
-          <ReduxProvider>{children}</ReduxProvider>
-        </QueryProvider>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );

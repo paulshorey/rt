@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchUserData } from "@/requests/userQuery";
+import { userQuery } from "@/requests/userQuery";
 
 export type UserState = {
   ip: string;
@@ -62,7 +62,7 @@ export const useSyncUser = () => {
     if (counter) local.counter = parseInt(counter);
     dispatch({ type: "user/set", payload: local });
     // sync from server
-    fetchUserData().then((remote) => {
+    userQuery().then((remote) => {
       dispatch({ type: "user/set", payload: remote });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
