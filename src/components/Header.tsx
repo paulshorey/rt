@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { useStateUser } from "@/state/user";
+import { useUser } from "@/state/user";
 
 type Props = {};
 
 function Header({}: Props) {
-  const user = useStateUser();
+  const user = useUser();
   return (
     <nav className="flex justify-between items-center px-5 py-3 border-b-black border-b-[1px]">
       <a
@@ -14,7 +14,7 @@ function Header({}: Props) {
         target="_blank"
         className="px-4 py-2 border-[1px] border-black rounded-full hover:shadow-md transition-all duration-200 hover:bg-gray-100"
       >
-        G
+        GitHub
       </a>
       <span>
         <span>#{user.counter}</span>
@@ -27,6 +27,7 @@ function Header({}: Props) {
           {user.weatherChange.tempToday === "Warmer" && "🥰"}
           {user.weatherChange.tempToday === "Cooler" && "🥶"}
           {user.weatherChange.wspdToday === "Windier" && "💨"}
+          {user.weatherChange.wspdToday === "Calmer" && "🙂"}
         </span>
       </span>
     </nav>

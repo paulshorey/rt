@@ -1,4 +1,4 @@
-import ReduxProvider from "@/components/redux-provider";
+import ReduxProvider from "@/providers/ReduxProvider";
 import "./globals.css";
 import { ReactNode } from "react";
 import QueryProvider from "@/providers/QueryProvider";
