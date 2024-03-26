@@ -7,8 +7,6 @@ import { userQuery } from "@/requests/userQuery";
 export type UserState = {
   ip: string;
   counter: number;
-  clicks: number;
-  reloads: number;
   location: {
     countryName?: string;
     countryCode?: string;
@@ -31,8 +29,6 @@ export type UserState = {
 const initialState = {
   ip: "",
   counter: 0,
-  clicks: 0,
-  reloads: 0,
   location: {},
   weatherChange: {},
 };
