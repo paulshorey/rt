@@ -2,37 +2,31 @@
 
 import React, { useEffect } from "react";
 import classes from "./User.module.css";
-import { useSyncUser, useSetUserCounter } from "@/state/user";
+import { userStore } from "@/state/user";
 
 function User() {
-  const user = useSyncUser();
-  const setUserCounter = useSetUserCounter();
-
-  let usePageRenderedOnce = false;
+  const user = userStore();
   useEffect(() => {
-    // run this only once (React 18)
-    if (usePageRenderedOnce) return;
+    user.fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    usePageRenderedOnce = true;
   }, []);
-
   return (
     <div className={"mt-10 p-10 border-red-500 border-[1px] text-center " + classes.wrapper}>
       <div className={"w-full "}>
         <div>Counter (saved in local storage):</div>
         <div className="pt-2 flex justify-center gap-5">
-          <button className="border rounded px-2 border-gray-300 shadow-sm" aria-label="Decrement value" onClick={() => setUserCounter(user.counter - 1)}>
+          <button className="border rounded px-2 border-gray-300 shadow-sm" aria-label="Decrement value" onClick={() => user.setCounter(user.counter - 1)}>
             -
           </button>
           <b>{user.counter}</b>
-          <button className="border rounded px-2 border-gray-300 shadow-sm" aria-label="Increment value" onClick={() => setUserCounter(user.counter + 1)}>
+          <button className="border rounded px-2 border-gray-300 shadow-sm" aria-label="Increment value" onClick={() => user.setCounter(user.counter + 1)}>
             +
           </button>
         </div>
-        <div className={"mt-7 " + (!user.ip ? "invisible" : "")}>
+        <div className={"mt-7 " + (!user.ipAddress ? "invisible" : "")}>
           <div>Your IP: </div>
           <div className="pt-1">
-            <b>{user.ip}</b>
+            <b>{user.ipAddress}</b>
           </div>
         </div>
         <div className={"mt-7 " + (!user.location.countryName ? "invisible" : "")}>

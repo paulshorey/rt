@@ -1,4 +1,3 @@
-import ReduxProvider from "@/providers/ReduxProvider";
 import "./globals.css";
 import { ReactNode } from "react";
 interface LayoutProps {
@@ -14,7 +13,7 @@ export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body className=" bg-[#FDFDFD] w-[100vw] h-[100vh]">
-        <ReduxProvider>{children}</ReduxProvider>
+        <>{children}</>
       </body>
     </html>
   );
