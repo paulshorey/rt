@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { userQuery } from "@/requests/userQuery";
 
 export type UserState = {
-  ip: string;
+  ipAddress: string;
   counter: number;
   location: {
     countryName?: string;
@@ -27,7 +27,7 @@ export type UserState = {
   };
 };
 const initialState = {
-  ip: "",
+  ipAddress: "",
   counter: 0,
   location: {},
   weatherChange: {},

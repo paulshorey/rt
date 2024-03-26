@@ -6,10 +6,10 @@ export const userQuery = async () => {
   //
   // ip
   const ipData = await fetcher(`https://api.ipify.org?format=json`, {});
-  user.ip = ipData.ip;
+  user.ipAddress = ipData.ip;
   //
   // location
-  const locationData = await fetcher(`/api/ip/${user.ip}`, {});
+  const locationData = await fetcher(`/api/ip/${user.ipAddress}`, {});
   if (!user.location) user.location = {};
   user.location.countryName = locationData.country;
   user.location.countryCode = locationData.countryCode;
